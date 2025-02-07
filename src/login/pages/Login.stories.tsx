@@ -28,11 +28,11 @@ export const WithInvalidCredential: Story = {
                     // existsError() so they are the only ones that need to mock.
                     existsError: (fieldName: string, ...otherFieldNames: string[]) => {
                         const fieldNames = [fieldName, ...otherFieldNames];
-                        return fieldNames.includes("username") || fieldNames.includes("password");
+                        return fieldNames.includes("email");
                     },
                     get: (fieldName: string) => {
-                        if (fieldName === "username" || fieldName === "password") {
-                            return "Invalid username or password.";
+                        if (fieldName === "email") {
+                            return "Invalid email.";
                         }
                         return "";
                     }
