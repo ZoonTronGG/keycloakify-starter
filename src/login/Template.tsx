@@ -81,46 +81,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     if (!isReadyToRender) {
         return null;
     }
-
-    const renderHeaderContent = () => {
-        if (auth?.showUsername && !auth.showResetCredentials) {
-            return (
-                <Box id="kc-username" className={kcClsx("kcFormGroupClass")}>
-                    <Typography variant="body1" component="label" id="kc-attempted-username">
-                        {auth.attemptedUsername}
-                    </Typography>
-                    <a id="reset-login" href={url.loginRestartFlowUrl} aria-label={msgStr("restartLoginTooltip")}>
-                        <Box className="kc-login-tooltip">
-                            <i className={kcClsx("kcResetFlowIcon")} />
-                            <Typography variant="caption" className="kc-tooltip-text">
-                                {msg("restartLoginTooltip")}
-                            </Typography>
-                        </Box>
-                    </a>
-                </Box>
-            );
-        }
-        return (
-            <Typography variant="h4" component="h1" gutterBottom>
-                {headerNode}
-            </Typography>
-        );
-    };
-
-    const headerContent = displayRequiredFields ? (
-        <Box className={kcClsx("kcContentWrapperClass")}>
-            <Box className={clsx(kcClsx("kcLabelWrapperClass"), "subtitle")}>
-                <Typography variant="subtitle2" component="span">
-                    <span className="required">*</span>
-                    {msg("requiredFields")}
-                </Typography>
-            </Box>
-            <Box sx={{ width: "100%" }}>{renderHeaderContent()}</Box>
-        </Box>
-    ) : (
-        renderHeaderContent()
-    );
-
     return (
         <Box className={cx(kcClsx("kcLoginClass"))} sx={containerStyles}>
             <Box sx={cardStyles}>
@@ -257,7 +217,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                         href="#"
                                         onClick={e => {
                                             e.preventDefault();
-                                            document.forms["kc-select-try-another-way-form"]?.submit();
                                         }}
                                         sx={{
                                             cursor: "pointer",

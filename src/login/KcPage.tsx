@@ -62,9 +62,9 @@ export const theme = createTheme({
                     boxSizing: "content-box"
                 }
             },
-            centeredTitle: {
-                textAlign: "center"
-            }
+            // centeredTitle: {
+            //     textAlign: "center"
+            // }
         },
         MuiButton: {
             styleOverrides: {
@@ -132,8 +132,8 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={true}
-                                htmlClass={classes.kcHtmlClass}
-                                bodyClass={classes.kcBodyClass}
+                                // htmlClass={classes.kcHtmlClass}
+                                // bodyClass={classes.kcBodyClass}
                             />
                         );
                     default:
@@ -144,8 +144,8 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                                 doUseDefaultCss={true}
                                 UserProfileFormFields={UserProfileFormFields}
                                 doMakeUserConfirmPassword={doMakeUserConfirmPassword}
-                                htmlClass={classes.kcHtmlClass}
-                                bodyClass={classes.kcBodyClass}
+                                // htmlClass={classes.kcHtmlClass}
+                                // bodyClass={classes.kcBodyClass}
                             />
                         );
                 }

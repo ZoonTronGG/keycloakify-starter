@@ -17,7 +17,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import FormHelperText from "@mui/material/FormHelperText";
 import Link from "@mui/material/Link";
 import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
+
 import { Box } from "@mui/material";
 
 export default function Login(props: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
@@ -51,7 +51,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             }
             socialProvidersNode={
                 realm.password &&
-                social?.providers?.length > 0 && (
+                (social?.providers?.length ?? 0) > 0 && (
                     <div
                         id="kc-social-providers"
                         className={kcClsx("kcFormSocialAccountSectionClass")}
@@ -60,7 +60,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                         <hr style={{ margin: "1.5rem 0" }} />
                         <h2
                             style={{
-                                fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                                // fontSize: { xs: "1.2rem", sm: "1.5rem" },
                                 textAlign: "center",
                                 marginBottom: "0F=rem"
                             }}
@@ -70,16 +70,12 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                         <ul
                             style={{
                                 display: "grid",
-                                gridTemplateColumns: {
-                                    xs: "repeat(2, 1fr)",
-                                    sm: "repeat(auto-fit, minmax(150px, 1fr))"
-                                },
                                 gap: "1rem",
                                 padding: 0,
                                 listStyle: "none"
                             }}
                         >
-                            {social.providers.map(p => (
+                            {social?.providers?.map(p => (
                                 <li key={p.alias} style={{ minWidth: "120px" }}>
                                     <a
                                         id={`social-${p.alias}`}
@@ -93,9 +89,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                             border: "1px solid #ddd",
                                             textDecoration: "none",
                                             transition: "background-color 0.2s",
-                                            ":hover": {
-                                                backgroundColor: "#f5f5f5"
-                                            }
                                         }}
                                         type="button"
                                         href={p.loginUrl}
@@ -139,7 +132,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         label={msg("email")}
                                         name="email"
                                         autoComplete="email"
-                                        defaultValue={login.email ?? ""}
+                                        defaultValue={login.username ?? ""}
                                         autoFocus
                                         variant="outlined"
                                         error={messagesPerField.existsError("email")}
