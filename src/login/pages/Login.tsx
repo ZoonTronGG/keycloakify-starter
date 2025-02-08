@@ -17,7 +17,6 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import FormHelperText from "@mui/material/FormHelperText";
 import Link from "@mui/material/Link";
 import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import { Box } from "@mui/material";
 
 export default function Login(props: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
@@ -51,39 +50,47 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             }
             socialProvidersNode={
                 realm.password &&
-                social?.providers?.length > 0 && (
+                (social?.providers ?? []).length > 0 && (
                     <div
                         id="kc-social-providers"
                         className={kcClsx("kcFormSocialAccountSectionClass")}
                         style={{ padding: "1rem", marginTop: "2rem" }}
                     >
                         <hr style={{ margin: "1.5rem 0" }} />
-                        <h2
-                            style={{
-                                fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                        {/* Use Box component with sx prop for responsive styling */}
+                        <Box
+                            component="h2"
+                            sx={{
+                                fontSize: {
+                                    xs: "1.2rem",
+                                    sm: "1.5rem"
+                                },
                                 textAlign: "center",
-                                marginBottom: "0F=rem"
+                                marginBottom: "0.5rem"
                             }}
                         >
                             {msg("identity-provider-login-label")}
-                        </h2>
-                        <ul
-                            style={{
+                        </Box>
+                        {/* Use Box component with sx prop for grid styling */}
+                        <Box
+                            component="ul"
+                            sx={{
                                 display: "grid",
+                                gap: "1rem",
+                                padding: 0,
+                                listStyle: "none",
                                 gridTemplateColumns: {
                                     xs: "repeat(2, 1fr)",
                                     sm: "repeat(auto-fit, minmax(150px, 1fr))"
-                                },
-                                gap: "1rem",
-                                padding: 0,
-                                listStyle: "none"
+                                }
                             }}
                         >
-                            {social.providers.map(p => (
+                            {(social?.providers ?? []).map(p => (
                                 <li key={p.alias} style={{ minWidth: "120px" }}>
-                                    <a
+                                    <Box
+                                        component="a"
                                         id={`social-${p.alias}`}
-                                        style={{
+                                        sx={{
                                             display: "flex",
                                             alignItems: "center",
                                             justifyContent: "center",
@@ -93,11 +100,10 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                             border: "1px solid #ddd",
                                             textDecoration: "none",
                                             transition: "background-color 0.2s",
-                                            ":hover": {
+                                            "&:hover": {
                                                 backgroundColor: "#f5f5f5"
                                             }
                                         }}
-                                        type="button"
                                         href={p.loginUrl}
                                     >
                                         {p.iconClasses && <i className={clsx(kcClsx("kcCommonLogoIdP"), p.iconClasses)} aria-hidden="true"></i>}
@@ -105,10 +111,10 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                             className={clsx(kcClsx("kcFormSocialAccountNameClass"), p.iconClasses && "kc-social-icon-text")}
                                             dangerouslySetInnerHTML={{ __html: kcSanitize(p.displayName) }}
                                         ></span>
-                                    </a>
+                                    </Box>
                                 </li>
                             ))}
-                        </ul>
+                        </Box>
                     </div>
                 )
             }
@@ -139,7 +145,8 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         label={msg("email")}
                                         name="email"
                                         autoComplete="email"
-                                        defaultValue={login.email ?? ""}
+                                        // 7. Fix email property name
+                                        defaultValue={login.username}
                                         autoFocus
                                         variant="outlined"
                                         error={messagesPerField.existsError("email")}

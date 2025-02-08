@@ -57,13 +57,13 @@ export const theme = createTheme({
     components: {
         MuiCssBaseline: {
             styleOverrides: {
-                // Only override .kcLoginClass
                 ".kcLoginClass": {
                     boxSizing: "content-box"
+                },
+                // Moved centeredTitle into styleOverrides as a CSS class
+                ".centeredTitle": {
+                    textAlign: "center"
                 }
-            },
-            centeredTitle: {
-                textAlign: "center"
             }
         },
         MuiButton: {
@@ -87,7 +87,7 @@ export const theme = createTheme({
             }
         }
     },
-    spacing: 8, // 8px base unit
+    spacing: 8,
     breakpoints: {
         values: {
             xs: 0,
@@ -132,8 +132,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={true}
-                                htmlClass={classes.kcHtmlClass}
-                                bodyClass={classes.kcBodyClass}
+                                // Removed invalid htmlClass and bodyClass props
                             />
                         );
                     default:
@@ -144,8 +143,7 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                                 doUseDefaultCss={true}
                                 UserProfileFormFields={UserProfileFormFields}
                                 doMakeUserConfirmPassword={doMakeUserConfirmPassword}
-                                htmlClass={classes.kcHtmlClass}
-                                bodyClass={classes.kcBodyClass}
+                                // Removed invalid htmlClass and bodyClass props
                             />
                         );
                 }
