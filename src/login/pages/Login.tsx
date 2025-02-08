@@ -130,7 +130,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                             }}
                             action={url.loginAction}
                             method="post"
-                            style={{ padding: "1rem" }}
                         >
                             {!usernameHidden && (
                                 <div className={kcClsx("kcFormGroupClass")} style={{ paddingBottom: "1rem" }}>
@@ -141,21 +140,26 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                                 fontSize: "0.9rem"
                                             }
                                         }}
+                                        label={
+                                            !realm.loginWithEmailAllowed
+                                                ? msg("username")
+                                                : realm.registrationEmailAsUsername
+                                                  ? msg("usernameOrEmail")
+                                                  : msg("email")
+                                        }
                                         tabIndex={2}
-                                        label={msg("email")}
-                                        name="email"
-                                        autoComplete="email"
-                                        // 7. Fix email property name
-                                        defaultValue={login.username}
-                                        autoFocus
                                         variant="outlined"
-                                        error={messagesPerField.existsError("email")}
+                                        name="username"
+                                        defaultValue={login.username ?? ""}
+                                        autoFocus
+                                        autoComplete="username"
+                                        error={messagesPerField.existsError("username", "password")}
                                         helperText={
-                                            messagesPerField.existsError("email") && (
+                                            messagesPerField.existsError("username", "password") && (
                                                 <span
                                                     aria-live="polite"
                                                     dangerouslySetInnerHTML={{
-                                                        __html: kcSanitize(messagesPerField.getFirstError("email"))
+                                                        __html: messagesPerField.getFirstError("username", "password")
                                                     }}
                                                 />
                                             )
