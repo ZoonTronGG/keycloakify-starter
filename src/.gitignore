@@ -3,13 +3,13 @@
 # === Owned files start ===
 # email/html/template.ftl
 # email/theme.properties
+# email/messages/messages_ru.properties
 # === Owned files end =====
 
 # === @keycloakify/email-native v260007.0.0 ===
 /email/messages/messages_fr.properties
 /email/html/email-update-confirmation.ftl
 /email/text/email-verification.ftl
-/email/messages/messages_ru.properties
 /email/messages/messages_uk.properties
 /email/messages/messages_pt.properties
 /email/messages/messages_zh_TW.properties

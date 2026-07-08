@@ -33,7 +33,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="background-color:#ffffff;border-radius:0 0 12px 12px;padding:32px;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;line-height:1.6;color:#1c1f23;">
+                        <td style="background-color:#ffffff;border-radius:0 0 12px 12px;padding:32px;word-break:break-word;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;line-height:1.6;color:#1c1f23;">
                             <#nested>
                         </td>
                     </tr>
