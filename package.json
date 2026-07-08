@@ -8,6 +8,7 @@
     },
     "type": "module",
     "scripts": {
+        "postinstall": "keycloakify sync-extensions",
         "dev": "vite",
         "build": "tsc && vite build",
         "build-keycloak-theme": "npm run build && keycloakify build",
@@ -25,7 +26,8 @@
         "keycloakify": "^11.8.8",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "tss-react": "^4.9.15"
+        "tss-react": "^4.9.15",
+        "@keycloakify/email-native": "~260007.0.0"
     },
     "devDependencies": {
         "@eslint/js": "^9.15.0",
