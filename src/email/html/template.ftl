@@ -14,11 +14,19 @@
 
 <#macro emailLayout>
 <html>
+<head>
+    <meta charset="utf-8">
+    <#-- Without a viewport meta, mobile mail clients render the email in a
+         ~980px desktop viewport and scale it down — everything looks tiny and
+         needs pinch-zoom (reported on the first dev test send, 2026-07-08). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="x-apple-disable-message-reformatting">
+</head>
 <body style="margin:0;padding:0;background-color:#f4f5f7;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f5f7;">
         <tr>
-            <td align="center" style="padding:32px 16px;">
-                <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">
+            <td align="center" style="padding:24px 12px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">
                     <tr>
                         <td style="background-color:#388E3C;border-radius:12px 12px 0 0;padding:20px 32px;" align="center">
                             <span style="font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;font-size:24px;font-weight:700;color:#ffffff;letter-spacing:0.5px;">Akzhol</span>
