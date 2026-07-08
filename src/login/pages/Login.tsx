@@ -130,18 +130,18 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         }}
                                         tabIndex={2}
                                         label={msg("email")}
-                                        name="email"
-                                        autoComplete="email"
+                                        name="username"
+                                        autoComplete="username"
                                         defaultValue={login.username ?? ""}
                                         autoFocus
                                         variant="outlined"
-                                        error={messagesPerField.existsError("email")}
+                                        error={messagesPerField.existsError("username", "password")}
                                         helperText={
-                                            messagesPerField.existsError("email") && (
+                                            messagesPerField.existsError("username", "password") && (
                                                 <span
                                                     aria-live="polite"
                                                     dangerouslySetInnerHTML={{
-                                                        __html: kcSanitize(messagesPerField.getFirstError("email"))
+                                                        __html: kcSanitize(messagesPerField.getFirstError("username", "password"))
                                                     }}
                                                 />
                                             )
