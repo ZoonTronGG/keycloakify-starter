@@ -1,3 +1,25 @@
+# Akzhol Keycloak theme — READ THIS FIRST
+
+> **Каноническая ветка: `akzhol-email-theme`** (default). Здесь живёт продовый дизайн
+> логина Akzhol (зелёная карточка, A-truck лого, чёрный Apple / белый Google) И email-тема.
+> Ветки `main`, `akzhol-login-page`, `akzhol-login-page-fixed` — УСТАРЕЛИ; `-fixed` в имени
+> врёт (там баг `name="email"`, ронявший все password-логины — prod-инцидент 2026-07-08).
+>
+> **Как менять тему** (инцидент 2026-07-09: дизайн жил только в jar, исходник не был закоммичен —
+> пересборка молча откатила вид; НЕ повторять):
+> 1. Правки → коммит → push СЮДА (в `akzhol-email-theme`) — до вендоринга jar.
+> 2. `./scripts/vendor-to-akzhol-rust.sh` — соберёт jar (откажется на грязном дереве)
+>    и скопирует в `akzhol-rust/custom-keycloak-themes/`.
+> 3. В akzhol-rust: коммит jar с `Source: ZoonTronGG/keycloakify-starter@<sha>` в месседже,
+>    push `development` (дев катится сам); merge в `production` — прод.
+> 4. Прод-вид проверять локально ДО пуша: `docker build -f docker/keycloak/Dockerfile` в akzhol-rust
+>    + `docker run … -v keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json:ro
+>    <img> start-dev --import-realm` (гоча: resetPasswordAllowed в export=false, включать kcadm'ом).
+>
+> Keycloak-инвариант: поле логина обязано POSTить `name="username"` (как бы ни называлось визуально),
+> ошибки полей Keycloak вешает на `username`/`password` — биндить existsError туда.
+> Постмортемы: vault `40-retros/2026-07-08-*`, `2026-07-09-*`.
+
 <p align="center">
     <i>🚀 <a href="https://keycloakify.dev">Keycloakify</a> v11 starter 🚀</i>
     <br/>
