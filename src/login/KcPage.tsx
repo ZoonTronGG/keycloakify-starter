@@ -1,129 +1,26 @@
-import type {} from "react";
+import "./main.css";
 import { Suspense, lazy } from "react";
 import type { ClassKey } from "keycloakify/login";
 import type { KcContext } from "./KcContext";
 import { useI18n } from "./i18n";
 import DefaultPage from "keycloakify/login/DefaultPage";
 import Template from "./Template";
-import { tss } from "tss-react/mui";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { CssBaseline } from "@mui/material";
 
-// Lazy-loaded components
-const UserProfileFormFields = lazy(
-    () => import("keycloakify/login/UserProfileFormFields")
-);
+const UserProfileFormFields = lazy(() => import("keycloakify/login/UserProfileFormFields"));
 const Login = lazy(() => import("./pages/Login"));
+const LoginResetPassword = lazy(() => import("./pages/LoginResetPassword"));
+
 const doMakeUserConfirmPassword = true;
 
-// Enhanced theme configuration
-export const theme = createTheme({
-    palette: {
-        mode: "light",
-        background: {
-            default: "#4caf50",
-            paper: "#ffffff"
-        },
-        text: {
-            primary: "#000000",
-            secondary: "rgba(0,0,0,0.52)"
-        },
-        primary: {
-            main: "#388e3c" // Darker green for primary elements
-        }
-    },
-    typography: {
-        fontFamily: [
-            "Montserrat",
-            "-apple-system",
-            "BlinkMacSystemFont",
-            '"Segoe UI"',
-            "Roboto",
-            '"Helvetica Neue"',
-            "Arial",
-            "sans-serif",
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"'
-        ].join(","),
-        h1: {
-            fontSize: "2.5rem",
-            fontWeight: 700
-        },
-        button: {
-            fontSize: "1rem"
-        }
-    },
-    components: {
-        MuiCssBaseline: {
-            styleOverrides: {
-                // Only override .kcLoginClass
-                ".kcLoginClass": {
-                    boxSizing: "content-box"
-                }
-            },
-            // centeredTitle: {
-            //     textAlign: "center"
-            // }
-        },
-        MuiButton: {
-            styleOverrides: {
-                root: {
-                    borderRadius: "8px",
-                    textTransform: "none",
-                    fontWeight: 600
-                }
-            },
-            defaultProps: {
-                variant: "contained",
-                color: "primary"
-            }
-        },
-        MuiAppBar: {
-            styleOverrides: {
-                root: {
-                    backgroundColor: "#388e3c" // Darker green
-                }
-            }
-        }
-    },
-    spacing: 8, // 8px base unit
-    breakpoints: {
-        values: {
-            xs: 0,
-            sm: 600,
-            md: 900,
-            lg: 1200,
-            xl: 1536
-        }
-    },
-    transitions: {
-        duration: {
-            shortest: 150,
-            shorter: 200,
-            short: 250,
-            standard: 300,
-            complex: 375
-        }
-    }
-});
+const classes = {} satisfies { [key in ClassKey]?: string };
 
 export default function KcPage(props: { kcContext: KcContext }) {
-    return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <KcPageContextualized {...props} />
-        </ThemeProvider>
-    );
-}
-
-function KcPageContextualized(props: { kcContext: KcContext }) {
     const { kcContext } = props;
+
     const { i18n } = useI18n({ kcContext });
-    const { classes } = useStyles();
 
     return (
-        <Suspense fallback={null}>
+        <Suspense>
             {(() => {
                 switch (kcContext.pageId) {
                     case "login.ftl":
@@ -132,8 +29,14 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={true}
-                                // htmlClass={classes.kcHtmlClass}
-                                // bodyClass={classes.kcBodyClass}
+                            />
+                        );
+                    case "login-reset-password.ftl":
+                        return (
+                            <LoginResetPassword
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={true}
                             />
                         );
                     default:
@@ -144,8 +47,6 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
                                 doUseDefaultCss={true}
                                 UserProfileFormFields={UserProfileFormFields}
                                 doMakeUserConfirmPassword={doMakeUserConfirmPassword}
-                                // htmlClass={classes.kcHtmlClass}
-                                // bodyClass={classes.kcBodyClass}
                             />
                         );
                 }
@@ -153,19 +54,3 @@ function KcPageContextualized(props: { kcContext: KcContext }) {
         </Suspense>
     );
 }
-
-const useStyles = tss.create(
-    ({ theme }) =>
-        ({
-            kcHtmlClass: {
-                ":root": {
-                    colorScheme: "light"
-                }
-            },
-            kcBodyClass: {
-                backgroundColor: theme.palette.background.default,
-                color: theme.palette.text.primary
-            },
-            kcFormCardClass: {}
-        }) satisfies { [key in ClassKey]?: unknown }
-);
